@@ -130,6 +130,7 @@ public class NativeViewInterface {
             }
         });
     }
+}
 
         public class WebAppInterface {
         @JavascriptInterface
