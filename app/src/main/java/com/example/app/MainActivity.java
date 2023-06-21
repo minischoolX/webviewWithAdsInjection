@@ -38,15 +38,32 @@ public class MainActivity extends Activity {
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient());
 //        mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.addJavascriptInterface(new WebAppInterface(), "AndroidInterface");
 
         // REMOTE RESOURCE
         // mWebView.loadUrl("https://example.com");
 
         // Load HTML content with the native view
         String htmlContent = "<html>\n" +
+                "<head>\n" +
+                "    <style>\n" +
+                "        #nativeViewContainer {\n" +
+                "        border: 1px dotted black;\n" +
+                "        width: 80%;\n" +
+                "        height: 200px;\n" +
+                "        margin: 0 auto;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "    <script>\n" +
+                "        function notifyAndroidToAddNativeView() {\n" +
+                "            AndroidInterface.addNativeView();\n" +
+                "        }\n" +
+                "    </script>\n" +
+                "</head>\n" +
                 "<body>\n" +
                 "    <h1>Welcome to My App</h1>\n" +
                 "    <div id=\"nativeViewContainer\"></div>\n" +
+                "    <button onclick=\"notifyAndroidToAddNativeView()\">Add Native View</button>\n" +
                 "</body>\n" +
                 "</html>";
         
@@ -54,17 +71,22 @@ public class MainActivity extends Activity {
         // mWebView.loadUrl("file:///android_asset/index.html");
         mWebView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null);
 
-        AdView adView = new AdView(this);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+//        AdView adView = new AdView(this);
+//        adView.setAdSize(AdSize.BANNER);
+//        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
-        RelativeLayout nativeViewContainer = mWebView.findViewById(R.id.nativeViewContainer);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        nativeViewContainer.addView(adView, layoutParams);
+//        LayoutInflater inflater = LayoutInflater.from(this);
+//        AdView nativeAdView = (AdView) inflater.inflate(R.layout.native_ad_view, null);
+//        RelativeLayout nativeViewContainer = webView.findViewById(R.id.nativeViewContainer);
+//        nativeViewContainer.addView(nativeAdView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+//        RelativeLayout nativeViewContainer = mWebView.findViewById(R.id.nativeViewContainer);
+//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        nativeViewContainer.addView(adView, layoutParams);
+
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        adView.loadAd(adRequest);
     }
 
     @Override
@@ -73,6 +95,30 @@ public class MainActivity extends Activity {
             mWebView.goBack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+        public class WebAppInterface {
+        @JavascriptInterface
+        public void addNativeView() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // Create and insert the AdMob banner programmatically
+                    AdView adView = new AdView(MainActivity.this);
+                    adView.setAdSize(AdSize.BANNER);
+                    adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+                    RelativeLayout nativeViewContainer = mWebView.findViewById(R.id.nativeViewContainer);
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    nativeViewContainer.addView(adView, layoutParams);
+
+                    // Load the AdMob banner
+                    AdRequest adRequest = new AdRequest.Builder().build();
+                    adView.loadAd(adRequest);
+                }
+            });
         }
     }
 }
