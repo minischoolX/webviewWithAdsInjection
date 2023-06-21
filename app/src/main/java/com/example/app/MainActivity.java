@@ -38,34 +38,35 @@ public class MainActivity extends Activity {
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient());
 //        mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.addJavascriptInterface(new WebAppInterface(), "AndroidInterface");
-
+        mWebView.addJavascriptInterface(new NativeViewInterface(), "NativeViewInterface");
+        
         // REMOTE RESOURCE
         // mWebView.loadUrl("https://example.com");
 
-        // Load HTML content with the native view
+       // Load HTML content with the native view
         String htmlContent = "<html>\n" +
-                "<head>\n" +
-                "    <style>\n" +
-                "        #nativeViewContainer {\n" +
-                "        border: 1px dotted black;\n" +
-                "        width: 80%;\n" +
-                "        height: 200px;\n" +
-                "        margin: 0 auto;\n" +
-                "        }\n" +
-                "    </style>\n" +
-                "    <script>\n" +
-                "        function notifyAndroidToAddNativeView() {\n" +
-                "            AndroidInterface.addNativeView();\n" +
-                "        }\n" +
-                "    </script>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <h1>Welcome to My App</h1>\n" +
-                "    <div id=\"nativeViewContainer\"></div>\n" +
-                "    <button onclick=\"notifyAndroidToAddNativeView()\">Add Native View</button>\n" +
-                "</body>\n" +
-                "</html>";
+        "<head>\n" +
+        "    <style>\n" +
+        "        #nativeViewContainer {\n" +
+        "        border: 1px dotted black;\n" +
+        "        width: 80%;\n" +
+        "        height: 200px;\n" +
+        "        margin: 0 auto;\n" +
+        "        }\n" +
+        "    </style>\n" +
+        "    <script>\n" +
+        "        function notifyAndroidToAddNativeView() {\n" +
+        "            window.NativeViewInterface.addNativeView();\n" +
+        "        }\n" +
+        "    </script>\n" +
+        "</head>\n" +
+        "<body>\n" +
+        "    <h1>Welcome to My App</h1>\n" +
+        "    <div id=\"nativeViewContainer\"></div>\n" +
+        "    <button onclick=\"notifyAndroidToAddNativeView()\">Add Native View</button>\n" +
+        "</body>\n" +
+        "</html>";
+
         
         // LOCAL RESOURCE
         // mWebView.loadUrl("file:///android_asset/index.html");
@@ -96,6 +97,38 @@ public class MainActivity extends Activity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    // JavaScript interface to handle communication between WebView and Android
+public class NativeViewInterface {
+    @JavascriptInterface
+    public void addNativeView() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Create and insert the AdMob banner programmatically
+                AdView adView = new AdView(MainActivity.this);
+                adView.setAdSize(AdSize.BANNER);
+                adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+                // Find the nativeViewContainer by evaluating JavaScript within WebView
+                mWebView.evaluateJavascript("document.getElementById('nativeViewContainer')", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        // Check if the nativeViewContainer is found
+                        if (value != null && !value.isEmpty()) {
+                            // Remove the surrounding double quotes from the value
+                            String containerId = value.replaceAll("\"", "");
+                            // Insert the adView into the nativeViewContainer
+                            mWebView.loadUrl("javascript:document.getElementById('" + containerId + "').appendChild(document.createElement('div')).appendChild(arguments[0])");
+                            // Load the AdMob banner
+                            AdRequest adRequest = new AdRequest.Builder().build();
+                            adView.loadAd(adRequest);
+                        }
+                    }
+                });
+            }
+        });
     }
 
         public class WebAppInterface {
