@@ -219,7 +219,9 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(MainActivity.this, "Scroll is now trigerred", Toast.LENGTH_SHORT).show();                    
+                    moveAdView();
+                    checkForSpecificDiv()
+                    //Toast.makeText(MainActivity.this, "Scroll is now trigerred", Toast.LENGTH_SHORT).show();                    
                 }
             });
         }
