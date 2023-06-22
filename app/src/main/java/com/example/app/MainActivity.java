@@ -53,7 +53,13 @@ public class MainActivity extends Activity {
         webView = findViewById(R.id.activity_main_webview);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                // Inject JavaScript code after the page finishes loading
+                injectScrollableScript();
+            }
+        });
         webView.setWebChromeClient(new WebChromeClient());
         webView.loadUrl("https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic");
 
@@ -132,6 +138,15 @@ public class MainActivity extends Activity {
 */
     }
 
+    private void injectScrollableScript() {
+        // Define the JavaScript code to make the page scrollable
+        String javascriptCode = "var screenHeight = window.innerHeight;" +
+                "document.body.style.height = (5 * screenHeight) + 'px';";
+
+        // Execute the JavaScript code in the WebView
+        webView.evaluateJavascript(javascriptCode, null);
+    }
+
     private void moveAdView() {
         if (isSpecificDivVisible) {
             RelativeLayout.LayoutParams paramsAdLayout = (RelativeLayout.LayoutParams) adLayout.getLayoutParams();
@@ -188,8 +203,9 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                moveAdView();
-                checkForSpecificDiv();                    
+                    Toast.makeText(MainActivity.this, "Scroll is now placed at y: " + scrollY , Toast.LENGTH_SHORT).show();
+                    moveAdView();
+                    checkForSpecificDiv();                    
                 }
             });
         }
