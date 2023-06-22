@@ -58,6 +58,10 @@ public class MainActivity extends Activity {
             public void onPageFinished(WebView view, String url) {
                 // Inject JavaScript code after the page finishes loading
                 injectScrollableScript();
+                webView.loadUrl("javascript: " +
+                    "window.onscroll = function() { " +
+                    "   window.android.onScroll(); " + // Call a JavaScript interface method
+                    "};");
             }
         });
         webView.setWebChromeClient(new WebChromeClient());
@@ -206,6 +210,16 @@ public class MainActivity extends Activity {
                     Toast.makeText(MainActivity.this, "Scroll is now placed at y: " + scrollY , Toast.LENGTH_SHORT).show();
                     moveAdView();
                     checkForSpecificDiv();                    
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void onScroll() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(MainActivity.this, "Scroll is now trigerred", Toast.LENGTH_SHORT).show();                    
                 }
             });
         }
