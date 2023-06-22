@@ -57,7 +57,10 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 // Inject JavaScript code after the page finishes loading
-                injectScrollableScript();
+                view.loadUrl("javascript: " +
+                             "var screenHeight = window.innerHeight;" +
+                "document.body.style.height = (5 * screenHeight) + 'px';");
+
                 view.loadUrl("javascript: " +
                     "window.onscroll = function() { " +
                     "   window.android.onScroll(); " + // Call a JavaScript interface method
