@@ -295,7 +295,7 @@ public class MainActivity extends Activity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
         adLayout.setLayoutParams(adLayoutParams);
-        ViewGroup activityMainLayout = findViewById(android.R.id.content);
+        activityMainLayout = findViewById(android.R.id.content);
 //        RelativeLayout activityMainLayout = findViewById(R.id.activity_main);
 //        activityMainLayout.addView(adContainer);
 
@@ -339,7 +339,7 @@ public class MainActivity extends Activity {
         webView.evaluateJavascript(
                 "javascript:(function() { " +
                         "var divElement = document.getElementById('adBooster');" +
-                        "if (divElement != null) { " +
+                        "if (divElement != null && divElement.offsetParent !== null) { " +
                         "   window.AndroidInterface.onSpecificDivVisible(true, divElement.offsetLeft, divElement.offsetTop); " +
                         "} else { " +
                         "   window. AndroidInterface.onSpecificDivVisible(false, 0, 0); " +
@@ -347,7 +347,6 @@ public class MainActivity extends Activity {
                         "})()",
                 null
         );
-                                /**"if (divElement != null && divElement.offsetParent !== null) { " +*/
     }
 
     private class JSInterface {
