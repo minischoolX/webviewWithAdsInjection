@@ -8,7 +8,6 @@ import android.webkit.WebView;
 
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
@@ -34,7 +33,6 @@ public class MainActivity extends Activity {
     private boolean wasSpecificDivVisible = false;
     private int specificDivX = 0;
     private int specificDivY = 0;
-    private ViewGroup activityMainLayout;
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")
@@ -288,13 +286,15 @@ public class MainActivity extends Activity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        adLayout = new RelativeLayout(this);
-        RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        adLayout.setLayoutParams(adLayoutParams);
-        activityMainLayout = findViewById(android.R.id.content);
+        adLayout = findViewById(R.id.adLayout);
+//        adLayout = new RelativeLayout(this);
+//        RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT
+//        );
+//        adLayout.setLayoutParams(adLayoutParams);
+
+//        activityMainLayout = findViewById(android.R.id.content);
 //        RelativeLayout activityMainLayout = findViewById(R.id.activity_main);
 //        activityMainLayout.addView(adContainer);
 
@@ -401,7 +401,7 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    activityMainLayout.addView(adLayout);
+                    //activityMainLayout.addView(adLayout);
                     if (adView.getParent() == null) {
                         adLayout.addView(adView);
                     }
@@ -414,7 +414,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     adLayout.removeView(adView);
-                    activityMainLayout.removeView(adLayout);
+                    //activityMainLayout.removeView(adLayout);
                 }
             });
         }
