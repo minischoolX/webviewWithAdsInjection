@@ -335,14 +335,44 @@ public class MainActivity extends Activity {
 
     private void checkForSpecificDiv() {
 //        Toast.makeText(MainActivity.this, "checkForSpecificDiv called", Toast.LENGTH_SHORT).show();
-        webView.evaluateJavascript(
-                "javascript:(function() { " +
-                        "var divElement = document.getElementById('adBooster');" +
-                        "if (divElement != null && divElement.offsetParent !== null) { " +
-                        "   window.AndroidInterface.onSpecificDivVisible(true, divElement.offsetLeft, divElement.offsetTop); " +
-                        "} else { " +
-                        "   window. AndroidInterface.onSpecificDivVisible(false, 0, 0); " +
-                        "} " +
+String positionScript = "function getElementScreenPosition(el) {" +
+    "  var rect = el.getBoundingClientRect();" +
+    "  var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;" +
+    "  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;" +
+    "  return {" +
+    "    x: rect.left + scrollLeft," +
+    "    y: rect.top + scrollTop" +
+    "  };" +
+    "}" +
+    "var adBoosters = document.querySelectorAll('#adBooster');" +
+    "for (var i = 0; i < adBoosters.length; i++) {" +
+    "  if (isElementVisible(adBoosters[i])) {" +
+    "    var position = getElementScreenPosition(adBoosters[i]);" +
+    "    console.log('Element with ID \"adBooster\" is visible');" +
+    "    console.log('Position (x, y):', position.x, position.y);" +
+    "    // Perform any desired actions with the x and y coordinates" +
+    "  }" +
+    "}";
+
+        webView.evaluateJavascript("javascript:(function () { " +
+                        "function getElementScreenPosition(el) {" +
+                        "  var rect = el.getBoundingClientRect();" +
+                        "  var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;" +
+                        "  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;" +
+                        "  return {" +
+                        "    x: rect.left + scrollLeft," +
+                        "    y: rect.top + scrollTop" +
+                        "  };" +
+                        "}" +
+                        "var adBoosters = document.querySelectorAll('#adBooster');" +
+                        "for (var i = 0; i < adBoosters.length; i++) {" +
+                        "  if (isElementVisible(adBoosters[i])) {" +
+                        "    var position = getElementScreenPosition(adBoosters[i]);" +
+                        "    window.AndroidInterface.onSpecificDivVisible(true, position.x, position.y);" +
+                        "  } else {" +
+                        "    window. AndroidInterface.onSpecificDivVisible(false, 0, 0);" +
+                        "  }" +
+                        "};" +
                         "})()",
                 null
         );
