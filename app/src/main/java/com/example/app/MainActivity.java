@@ -8,6 +8,7 @@ import android.webkit.WebView;
 
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
@@ -114,7 +115,8 @@ public class MainActivity extends Activity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
         adLayout.setLayoutParams(adLayoutParams);
-        RelativeLayout activityMainLayout = findViewById(R.id.activity_main);
+        ViewGroup activityMainLayout = findViewById(android.R.id.content);
+//        RelativeLayout activityMainLayout = findViewById(R.id.activity_main);
 //        activityMainLayout.addView(adContainer);
 
         webView.addJavascriptInterface(new JSInterface(), "AndroidInterface");
@@ -183,7 +185,7 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    activityMainLayout.addView(adContainer);
+                    activityMainLayout.addView(adLayout);
                     if (adView.getParent() == null) {
                         adLayout.addView(adView);
                     }
@@ -196,7 +198,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     adLayout.removeView(adView);
-                    activityMainLayout.removeView(adContainer);
+                    activityMainLayout.removeView(adLayout);
                 }
             });
         }
