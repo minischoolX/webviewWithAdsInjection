@@ -152,6 +152,7 @@ public class MainActivity extends Activity {
     }
 
     private void moveAdView() {
+        Toast.makeText(MainActivity.this, "moveAdView called /n" + "isSpecificDivVisible : " + isSpecificDivVisible + "/n" + "specificDivX : " + specificDivX + "/n" + "specificDivY : " + specificDivY , Toast.LENGTH_SHORT).show();
         if (isSpecificDivVisible) {
             RelativeLayout.LayoutParams paramsAdLayout = (RelativeLayout.LayoutParams) adLayout.getLayoutParams();
             paramsAdLayout.leftMargin = specificDivX;
@@ -165,10 +166,11 @@ public class MainActivity extends Activity {
     }
 
     private void checkForSpecificDiv() {
+        Toast.makeText(MainActivity.this, "checkForSpecificDiv called", Toast.LENGTH_SHORT).show();
         webView.evaluateJavascript(
                 "javascript:(function() { " +
                         "var divElement = document.getElementById('adBooster');" +
-                        "if (divElement != null && divElement.offsetParent !== null) { " +
+                        "if (divElement != null) { " +
                         "   window.AndroidInterface.onSpecificDivVisible(true, divElement.offsetLeft, divElement.offsetTop); " +
                         "} else { " +
                         "   window. AndroidInterface.onSpecificDivVisible(false, 0, 0); " +
@@ -176,6 +178,7 @@ public class MainActivity extends Activity {
                         "})()",
                 null
         );
+                                /**"if (divElement != null && divElement.offsetParent !== null) { " +*/
     }
 
     private class JSInterface {
@@ -185,7 +188,9 @@ public class MainActivity extends Activity {
             isSpecificDivVisible = isVisible;
             specificDivX = divX;
             specificDivY = divY;
+            Toast.makeText(MainActivity.this, "onSpecificDivVisible called /n" + "wasSpecificDivVisible : " + wasSpecificDivVisible + "/n" + "isSpecificDivVisible : " + isSpecificDivVisible + "/n" + "specificDivX : " + specificDivX + "/n" + "specificDivY : " + specificDivY , Toast.LENGTH_SHORT).show();
 
+            
             if (wasSpecificDivVisible != isSpecificDivVisible) {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -221,7 +226,7 @@ public class MainActivity extends Activity {
                 public void run() {
                     moveAdView();
                     checkForSpecificDiv();
-                    //Toast.makeText(MainActivity.this, "Scroll is now trigerred", Toast.LENGTH_SHORT).show();                    
+                    Toast.makeText(MainActivity.this, "Scroll is now trigerred", Toast.LENGTH_SHORT).show();
                 }
             });
         }
