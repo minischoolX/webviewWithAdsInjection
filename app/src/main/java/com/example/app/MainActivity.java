@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
     private boolean wasSpecificDivVisible = false;
     private int specificDivX = 0;
     private int specificDivY = 0;
+    private ViewGroup activityMainLayout;
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")
