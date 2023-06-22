@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
         "      padding: 20px;\n" +
         "    }\n" +
         "\n" +
-        "    .adBooster {\n" +
+        "    .adBoosterX {\n" +
         "      background-color: #f2f2f2;\n" +
         "      padding: 20px;\n" +
         "      margin: 0 auto;\n" +
@@ -122,7 +122,7 @@ public class MainActivity extends Activity {
         "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
         "  </div>\n" +
         "\n" +
-        "  <div class=\"adBooster\">\n" +
+        "  <div id=\"adBooster\" class=\"adBoosterX\">\n" +
         "    <h2>Ad Booster</h2>\n" +
         "    <!-- Add your ad content here -->\n" +
         "  </div>\n" +
@@ -153,7 +153,7 @@ public class MainActivity extends Activity {
         "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
         "  </div>\n" +
         "\n" +
-        "  <div class=\"adBooster\">\n" +
+        "  <div id=\"adBooster\" class=\"adBoosterX\">\n" +
         "    <h2>Ad Booster</h2>\n" +
         "    <!-- Add your ad content here -->\n" +
         "  </div>\n" +
