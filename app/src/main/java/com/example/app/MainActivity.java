@@ -21,6 +21,8 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.LoadAdError;
 
 
 public class MainActivity extends Activity {
@@ -42,6 +44,7 @@ public class MainActivity extends Activity {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
+                Toast.makeText(MainActivity.this, "Ads have been initialized", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -57,6 +60,51 @@ public class MainActivity extends Activity {
         adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111"); // Use Google AdMob Sample Ad Unit ID for testing
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClicked() {
+              // Code to be executed when the user clicks on an ad.
+                Toast.makeText(MainActivity.this, "onAdClicked", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdClosed() {
+              // Code to be executed when the user is about to return
+              // to the app after tapping on an ad.
+                Toast.makeText(MainActivity.this, "onAdClosed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(LoadAdError adError) {
+              // Code to be executed when an ad request fails.
+                String error =
+                String.format(
+                    "domain: %s, code: %d, message: %s",
+                    adError.getDomain(), adError.getCode(), adError.getMessage());
+
+                Toast.makeText(MainActivity.this, String.format("Ad failed to load with error %s", error) , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdImpression() {
+              // Code to be executed when an impression is recorded
+              // for an ad.
+                Toast.makeText(MainActivity.this, "onAdImpression", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded() {
+              // Code to be executed when an ad finishes loading.
+                Toast.makeText(MainActivity.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdOpened() {
+              // Code to be executed when an ad opens an overlay that
+              // covers the screen.
+                Toast.makeText(MainActivity.this, "onAdOpened", Toast.LENGTH_SHORT).show();
+            }
+        });
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
@@ -66,6 +114,8 @@ public class MainActivity extends Activity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
         adLayout.setLayoutParams(adLayoutParams);
+        RelativeLayout activityMainLayout = findViewById(R.id.activity_main);
+//        activityMainLayout.addView(adContainer);
 
         webView.addJavascriptInterface(new JSInterface(), "AndroidInterface");
 
@@ -80,10 +130,14 @@ public class MainActivity extends Activity {
 
     private void moveAdView() {
         if (isSpecificDivVisible) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) adView.getLayoutParams();
-            params.leftMargin = specificDivX;
-            params.topMargin = specificDivY;
-            adView.setLayoutParams(params);
+            RelativeLayout.LayoutParams paramsAdLayout = (RelativeLayout.LayoutParams) adLayout.getLayoutParams();
+            paramsAdLayout.leftMargin = specificDivX;
+            paramsAdLayout.topMargin = specificDivY;
+            RelativeLayout.LayoutParams paramsAdView = (RelativeLayout.LayoutParams) adView.getLayoutParams();
+            paramsAdView.leftMargin = specificDivX;
+            paramsAdView.topMargin = specificDivY;
+            adLayout.setLayoutParams(paramsAdLayout);
+            adView.setLayoutParams(paramsAdView);
         }
     }
 
@@ -129,6 +183,7 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    activityMainLayout.addView(adContainer);
                     if (adView.getParent() == null) {
                         adLayout.addView(adView);
                     }
@@ -141,6 +196,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     adLayout.removeView(adView);
+                    activityMainLayout.removeView(adContainer);
                 }
             });
         }
