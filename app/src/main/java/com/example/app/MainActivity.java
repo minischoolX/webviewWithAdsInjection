@@ -334,8 +334,32 @@ public class MainActivity extends Activity {
     }
 
     private void checkForSpecificDiv() {
-        Toast.makeText(MainActivity.this, "checkForSpecificDiv called", Toast.LENGTH_SHORT).show();
-        webView.evaluateJavascript("javascript: function getElementScreenPosition(el) {" +
+        //Toast.makeText(MainActivity.this, "checkForSpecificDiv called", Toast.LENGTH_SHORT).show();
+webView.evaluateJavascript("javascript:(function () { " +
+        "function getElementScreenPosition(el) {" +
+        "  var rect = el.getBoundingClientRect();" +
+        "  var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;" +
+        "  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;" +
+        "  return {" +
+        "    x: rect.left + scrollLeft," +
+        "    y: rect.top + scrollTop" +
+        "  };" +
+        "}" +
+        "var adBoosters = document.querySelectorAll('#adBooster');" +
+        "for (var i = 0; i < adBoosters.length; i++) {" +
+        "  var position = getElementScreenPosition(adBoosters[i]);" +
+        "  var isVisible = (position.x >= 0 && position.y >= 0);" +
+        "  if (isVisible) {" +
+        "    window.AndroidInterface.onSpecificDivVisible(true, position.x, position.y);" +
+        "  } else {" +
+        "    window.AndroidInterface.onSpecificDivVisible(false, 0, 0);" +
+        "  }" +
+        "}" +
+        "})()",
+    null
+);
+
+/**        webView.evaluateJavascript("javascript: function getElementScreenPosition(el) {" +
                         "  var rect = el.getBoundingClientRect();" +
                         "  var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;" +
                         "  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;" +
@@ -355,7 +379,7 @@ public class MainActivity extends Activity {
                         "};()",
                 null
         );
-    }
+   */ }
 
     private class JSInterface {
         @JavascriptInterface
