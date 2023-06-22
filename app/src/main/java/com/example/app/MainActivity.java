@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 // Inject JavaScript code after the page finishes loading
-                injectScrollableScript();
+//                injectScrollableScript();
                 view.loadUrl("javascript: " +
                     "window.onscroll = function() { " +
                     "   window.AndroidInterface.onScroll(); " + // Call a JavaScript interface method
@@ -65,7 +65,176 @@ public class MainActivity extends Activity {
             }
         });
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic");
+        //webView.loadUrl("https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic");
+        String htmlContent = "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<head>\n" +
+        "  <title>My Webpage</title>\n" +
+        "  <style>\n" +
+        "    body {\n" +
+        "      margin: 0;\n" +
+        "      padding: 0;\n" +
+        "      font-family: Arial, sans-serif;\n" +
+        "    }\n" +
+        "\n" +
+        "    .navbar {\n" +
+        "      position: sticky;\n" +
+        "      top: 0;\n" +
+        "      background-color: #333;\n" +
+        "      padding: 10px;\n" +
+        "      color: #fff;\n" +
+        "    }\n" +
+        "\n" +
+        "    .content {\n" +
+        "      margin-top: 70px;\n" +
+        "      padding: 20px;\n" +
+        "    }\n" +
+        "\n" +
+        "    .adBooster {\n" +
+        "      background-color: #f2f2f2;\n" +
+        "      padding: 20px;\n" +
+        "      margin: 0 auto;\n" +
+        "      width: 70%;\n" +
+        "    }\n" +
+        "  </style>\n" +
+        "</head>\n" +
+        "<body>\n" +
+        "  <div class=\"navbar\">\n" +
+        "    <h1>My Webpage</h1>\n" +
+        "    <!-- Add your navbar content here -->\n" +
+        "    <ul>\n" +
+        "      <li><a href=\"#section1\">Section 1</a></li>\n" +
+        "      <li><a href=\"#section2\">Section 2</a></li>\n" +
+        "      <li><a href=\"#section3\">Section 3</a></li>\n" +
+        "    </ul>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section1\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section2\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section3\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"adBooster\">\n" +
+        "    <h2>Ad Booster</h2>\n" +
+        "    <!-- Add your ad content here -->\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section4\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section5\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section6\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section1\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section2\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section3\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"adBooster\">\n" +
+        "    <h2>Ad Booster</h2>\n" +
+        "    <!-- Add your ad content here -->\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section4\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section5\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section6\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section1\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section2\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section3\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"adBooster\">\n" +
+        "    <h2>Ad Booster</h2>\n" +
+        "    <!-- Add your ad content here -->\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section4\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section5\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section6\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section1\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section2\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section3\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"adBooster\">\n" +
+        "    <h2>Ad Booster</h2>\n" +
+        "    <!-- Add your ad content here -->\n" +
+        "  </div>\n" +
+        "\n" +
+        "  <div class=\"content\">\n" +
+        "    <h2 id=\"section4\">Section 1</h2>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "\n" +
+        "    <h2 id=\"section5\">Section 2</h2>\n" +
+        "    <input type=\"text\" placeholder=\"Enter your name\"><br><br>\n" +
+        "    <textarea placeholder=\"Enter your message\"></textarea><br><br>\n" +
+        "\n" +
+        "    <h2 id=\"section6\">Section 3</h2>\n" +
+        "    <img src=\"image.jpg\" alt=\"Image\"><br><br>\n" +
+        "    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida sollicitudin magna, sit amet posuere eros aliquam et. Duis at dolor a velit finibus finibus in sed lacus. Aliquam ac volutpat enim, vitae vestibulum nisi.</p>\n" +
+        "  </div>\n" +
+        "</body>\n" +
+        "</html>";
+        webView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null);
 
         
         // Create the AdView programmatically
@@ -152,7 +321,7 @@ public class MainActivity extends Activity {
     }
 
     private void moveAdView() {
-        Toast.makeText(MainActivity.this, "moveAdView called /n" + "isSpecificDivVisible : " + isSpecificDivVisible + "/n" + "specificDivX : " + specificDivX + "/n" + "specificDivY : " + specificDivY , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "moveAdView called \n" + "isSpecificDivVisible : " + isSpecificDivVisible + "\n" + "specificDivX : " + specificDivX + "\n" + "specificDivY : " + specificDivY , Toast.LENGTH_SHORT).show();
         if (isSpecificDivVisible) {
             RelativeLayout.LayoutParams paramsAdLayout = (RelativeLayout.LayoutParams) adLayout.getLayoutParams();
             paramsAdLayout.leftMargin = specificDivX;
@@ -166,7 +335,7 @@ public class MainActivity extends Activity {
     }
 
     private void checkForSpecificDiv() {
-        Toast.makeText(MainActivity.this, "checkForSpecificDiv called", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "checkForSpecificDiv called", Toast.LENGTH_SHORT).show();
         webView.evaluateJavascript(
                 "javascript:(function() { " +
                         "var divElement = document.getElementById('adBooster');" +
@@ -188,7 +357,7 @@ public class MainActivity extends Activity {
             isSpecificDivVisible = isVisible;
             specificDivX = divX;
             specificDivY = divY;
-            Toast.makeText(MainActivity.this, "onSpecificDivVisible called /n" + "wasSpecificDivVisible : " + wasSpecificDivVisible + "/n" + "isSpecificDivVisible : " + isSpecificDivVisible + "/n" + "specificDivX : " + specificDivX + "/n" + "specificDivY : " + specificDivY , Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "onSpecificDivVisible called \n" + "wasSpecificDivVisible : " + wasSpecificDivVisible + "\n" + "isSpecificDivVisible : " + isSpecificDivVisible + "\n" + "specificDivX : " + specificDivX + "\n" + "specificDivY : " + specificDivY , Toast.LENGTH_SHORT).show();
 
             
             if (wasSpecificDivVisible != isSpecificDivVisible) {
