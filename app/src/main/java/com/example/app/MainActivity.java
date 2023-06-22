@@ -122,13 +122,14 @@ public class MainActivity extends Activity {
 
         webView.addJavascriptInterface(new JSInterface(), "AndroidInterface");
 
-        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+/**        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 moveAdView();
                 checkForSpecificDiv();
             }
         });
+*/
     }
 
     private void moveAdView() {
@@ -180,6 +181,17 @@ public class MainActivity extends Activity {
                     }
                 });
             }
+        }
+
+        @JavascriptInterface
+        public void onScrollChanged(int scrollY) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                moveAdView();
+                checkForSpecificDiv();                    
+                }
+            });
         }
 
         private void addAdView() {
