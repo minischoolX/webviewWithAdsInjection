@@ -338,6 +338,33 @@ public class MainActivity extends Activity {
 webView.evaluateJavascript("javascript:(function () { " +
         "function getElementScreenPosition(el) {" +
         "  var rect = el.getBoundingClientRect();" +
+        "  return {" +
+        "    x: rect.left," +
+        "    y: rect.top" +
+        "  };" +
+        "}" +
+        "var adBoosters = document.querySelectorAll('#adBooster');" +
+        "var isVisible = false;" +
+        "for (var i = 0; i < adBoosters.length; i++) {" +
+        "  var position = getElementScreenPosition(adBoosters[i]);" +
+        "  if (position.y >= 0) {" +
+        "    isVisible = true;" +
+        "    break;" +
+        "  }" +
+        "}" +
+        "if (isVisible) {" +
+        "  var position = getElementScreenPosition(adBoosters[i]);" +
+        "  window.AndroidInterface.onSpecificDivVisible(true, position.x, position.y);" +
+        "} else {" +
+        "  window.AndroidInterface.onSpecificDivVisible(false, 0, 0);" +
+        "}" +
+        "})()",
+    null
+);
+
+        /**webView.evaluateJavascript("javascript:(function () { " +
+        "function getElementScreenPosition(el) {" +
+        "  var rect = el.getBoundingClientRect();" +
         "  var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;" +
         "  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;" +
         "  return {" +
@@ -357,7 +384,7 @@ webView.evaluateJavascript("javascript:(function () { " +
         "}" +
         "})()",
     null
-);
+);*/
 
 /**        webView.evaluateJavascript("javascript: function getElementScreenPosition(el) {" +
                         "  var rect = el.getBoundingClientRect();" +
