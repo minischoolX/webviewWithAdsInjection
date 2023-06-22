@@ -13,7 +13,6 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.widget.RelativeLayout;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
