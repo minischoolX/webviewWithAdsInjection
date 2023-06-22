@@ -169,9 +169,9 @@ public class MainActivity extends Activity {
                 "javascript:(function() { " +
                         "var divElement = document.getElementById('adBooster');" +
                         "if (divElement != null && divElement.offsetParent !== null) { " +
-                        "   AndroidInterface.onSpecificDivVisible(true, divElement.offsetLeft, divElement.offsetTop); " +
+                        "   window.AndroidInterface.onSpecificDivVisible(true, divElement.offsetLeft, divElement.offsetTop); " +
                         "} else { " +
-                        "   AndroidInterface.onSpecificDivVisible(false, 0, 0); " +
+                        "   window. AndroidInterface.onSpecificDivVisible(false, 0, 0); " +
                         "} " +
                         "})()",
                 null
