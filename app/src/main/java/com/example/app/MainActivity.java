@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
                 view.loadUrl("javascript: " +
                     "window.onscroll = function() { " +
-                    "   window.android.onScroll(); " + // Call a JavaScript interface method
+                    "   window.AndroidInterface.onScroll(); " + // Call a JavaScript interface method
                     "};");
             }
         });
