@@ -13,6 +13,36 @@
         <link rel="canonical" href="https://www.youtube.com/watch?v=QE9SJ7er2Ac">
         <meta property="og:url" content="https://www.youtube.com/watch?v=QE9SJ7er2Ac">
         <meta property="twitter:url" content="https://www.youtube.com/watch?v=QE9SJ7er2Ac">
+<style>
+    /* CSS styles for the toggle and run script buttons */
+    .toggle-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    .run-script-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    /* CSS styles for the code view */
+    .code-view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      overflow: scroll;
+      z-index: 9998;
+    }
+  </style>
         <style name="www-roboto" nonce="udhDKjgelhdIPHeKRIGbOA">
             @font-face {
                 font-family: 'Roboto';
@@ -4341,5 +4371,77 @@
                 window.ytcsi.info("st", 640.0, '');
             }
         </script>
+          <script>
+    // Create and append the toggle button
+    var toggleButton = document.createElement("div");
+    toggleButton.textContent = "Source Code";
+    toggleButton.classList.add("toggle-button");
+    document.body.appendChild(toggleButton);
+
+    // Create and append the run script button
+    var runScriptButton = document.createElement("div");
+    runScriptButton.textContent = "Script";
+    runScriptButton.classList.add("run-script-button");
+    document.body.appendChild(runScriptButton);
+
+    // Toggle source code
+    toggleButton.addEventListener("click", function () {
+      if (toggleButton.textContent === "Source Code") {
+        var codeView = document.createElement("pre");
+        codeView.textContent = document.documentElement.innerHTML;
+        codeView.classList.add("code-view");
+        document.body.appendChild(codeView);
+        toggleButton.textContent = "Rendered Page";
+      } else {
+        var codeView = document.querySelector(".code-view");
+        if (codeView) {
+          document.body.removeChild(codeView);
+          toggleButton.textContent = "Source Code";
+        }
+      }
+    });
+
+    // Run script
+    runScriptButton.addEventListener("click", function () {
+      var scriptView = document.createElement("div");
+      scriptView.style.position = "fixed";
+      scriptView.style.top = "50%";
+      scriptView.style.left = "50%";
+      scriptView.style.transform = "translate(-50%, -50%)";
+      scriptView.style.backgroundColor = "white";
+      scriptView.style.padding = "20px";
+      scriptView.style.zIndex = "9999";
+
+      var scriptInput = document.createElement("textarea");
+      scriptInput.style.width = "400px";
+      scriptInput.style.height = "200px";
+      scriptView.appendChild(scriptInput);
+
+      var runButton = document.createElement("button");
+      runButton.textContent = "Run";
+      scriptView.appendChild(runButton);
+
+      var cancelButton = document.createElement("button");
+      cancelButton.textContent = "Cancel";
+      scriptView.appendChild(cancelButton);
+
+      document.body.appendChild(scriptView);
+
+      // Run script on click
+      runButton.addEventListener("click", function () {
+        var script = scriptInput.value;
+        try {
+          eval(script);
+        } catch (error) {
+          console.error("Error running script:", error);
+        }
+      });
+
+      // Close script view on click
+      cancelButton.addEventListener("click", function () {
+        document.body.removeChild(scriptView);
+      });
+    });
+  </script>
     </body>
 </html>
